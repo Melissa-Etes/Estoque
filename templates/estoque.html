@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque</title>
+    <style>
+        .acao {
+            display: flex;
+            gap: 10px;
+            /* Espaçamento entre os botões */
+            align-items: center;
+            /* Alinha os itens ao centro verticalmente, se necessário */
+        }
+
+        button {
+            background-color: transparent;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .tabela {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .tabela th,
+        .tabela td {
+
+            padding: 12px;
+            text-align: center;
+        }
+
+        .tabela th {
+            background-color: #844caf;
+            color: white;
+        }
+
+        .tabela tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .tabela tr:hover {
+            background-color: #ddd;
+        }
+
+        .delete-button {
+            background-color: red;
+            color: rgb(255, 58, 58);
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: darkred;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(45deg, #49a09d, #5f2c82);
+            font-family: sans-serif;
+            font-weight: 100;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        table {
+            width: 800px;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #000000;
+        }
+
+        th {
+            text-align: left;
+        }
+
+
+        thead {
+            th {
+                background-color: #55608f;
+            }
+        }
+
+        tbody {
+            tr {
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.3);
+                }
+            }
+
+            td {
+                position: relative;
+
+                &:hover {
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        top: -9999px;
+                        bottom: -9999px;
+                        background-color: rgba(255, 255, 255, 0.2);
+                        z-index: -1;
+                    }
+                }
+            }
+        }
+
+        /* From Uiverse.io by Peary74 */
+        .del {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 160px;
+            height: 50px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .del div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: none;
+            box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .5),
+                inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
+                inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            letter-spacing: 1px;
+            color: #ff0000;
+            z-index: 1;
+            transition: .6s;
+        }
+
+        .del:hover div {
+            letter-spacing: 4px;
+            color: #fff;
+            background: #ff0000;
+        }
+
+        .del {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 160px;
+            height: 50px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .del div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: none;
+            box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .5),
+                inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
+                inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            letter-spacing: 1px;
+            color: #ff0000;
+            z-index: 1;
+            transition: .6s;
+        }
+
+        .del:hover div {
+            letter-spacing: 4px;
+            color: #fff;
+            background: #ff0000;
+        }
+
+        .del {
+            border-width: 0;
+        }
+
+        /* From Uiverse.io by gharsh11032000 */
+        .button2 {
+            position: relative;
+            width: 120px;
+            height: 40px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            color: white;
+            flex-direction: column;
+            justify-content: center;
+            border: none;
+            padding: 12px;
+            gap: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 45.9%;
+        }
+
+        .button2::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -4px;
+            top: -1px;
+            margin: auto;
+            width: 128px;
+            height: 48px;
+            border-radius: 10px;
+            background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
+            z-index: -10;
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .button2::after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100%);
+            transform: translate3d(0, 0, 0) scale(0.95);
+            filter: blur(20px);
+        }
+
+        .button2:hover::after {
+            filter: blur(30px);
+        }
+
+        .button2:hover::before {
+            transform: rotate(-180deg);
+        }
+
+        .button2:active::before {
+            scale: 0.7;
+        }
+
+        /* From Uiverse.io by Peary74 */
+        .alterar {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 160px;
+            height: 50px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .alterar div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: none;
+            box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .5),
+                inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
+                inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            letter-spacing: 1px;
+            color: #ffd900;
+            z-index: 1;
+            transition: .6s;
+        }
+
+        .alterar:hover div {
+            letter-spacing: 4px;
+            color: #fff;
+            background: #f2ff00;
+        }
+
+        .alterar {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 160px;
+            height: 50px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .alterar div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: none;
+            box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .5),
+                inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
+                inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            letter-spacing: 1px;
+            color: #ffd900;
+            z-index: 1;
+            transition: .6s;
+        }
+
+        .alterar:hover div {
+            letter-spacing: 4px;
+            color: #fff;
+            background: #ffd900;
+        }
+
+        .alterar {
+            border-width: 0;
+        }
+    </style>
+</head>
+
+
+<body>
+    <h1>Produtos em Estoque</h1>
+    <!-- A tabela será inserida aqui -->
+    <table class="tabela">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.id }}</td>
+                <td>{{ produto.nome }}</td>
+                <td>R${{ "%.2f"|format(produto.preco) }}</td>
+                <td>{{ produto.quantidade }}</td>
+                <td>
+                    <!-- Botão para apagar -->
+                    <div class="acao">
+                        <form method="POST" action="/apagar" style="display:inline;">
+                            <input type="hidden" name="id" value="{{ produto.id }}">
+                            <button type="submit" class="del">
+                                <div>DELETE</div>
+                            </button>
+                        </form>
+                        <!-- Botão para alterar com JavaScript -->
+                        <button type="button" class="alterar" onclick="tornarEditavel(this)">
+                            <div>ALTERAR</div>
+                        </button>
+                        <button type="button" class="salvar" onclick="salvarAlteracoes(this)" style="display: none;">
+                            <div>SALVAR</div>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button onclick="history.back()" class="button2">Voltar</button>
+
+    <script>function tornarEditavel(botao) {
+    const linha = botao.closest('tr'); // Encontra a linha do botão
+    const celulas = linha.querySelectorAll('td:not(:last-child)'); // Seleciona células exceto a última (ações)
+
+    // Torna cada célula editável
+    celulas.forEach(celula => celula.setAttribute('contenteditable', 'true'));
+    
+    // Exibe o botão SALVAR
+    linha.querySelector('.salvar').style.display = 'inline';
+    botao.style.display = 'none'; // Oculta o botão ALTERAR
+}
+
+function salvarAlteracoes(botao) {
+    const linha = botao.closest('tr'); // Encontra a linha do botão
+    const celulas = linha.querySelectorAll('td:not(:last-child)'); // Seleciona células exceto a última (ações)
+
+    // Captura os valores editados
+    const id = celulas[0].innerText; // Assume que o ID é a primeira célula
+    const nome = celulas[1].innerText;
+    const preco = celulas[2].innerText;
+    const quantidade = celulas[3].innerText;
+
+    // Envia para o backend
+    fetch('/alterar-tabela', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id, nome, preco, quantidade })
+    }).then(response => {
+        if (response.ok) {
+            alert('Alterações salvas com sucesso!');
+            // Torna as células não editáveis
+            celulas.forEach(celula => celula.setAttribute('contenteditable', 'false'));
+            linha.querySelector('.alterar').style.display = 'inline';
+            botao.style.display = 'none';
+        } else {
+            alert('Erro ao salvar alterações.');
+        }
+    });
+}
+</script>
+</body>
+
+</html>

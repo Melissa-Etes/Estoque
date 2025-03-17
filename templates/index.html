@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste 02</title>
+    <style>
+        /* RESET/BASIC STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+        :root {
+            --white: #ffffff;
+            --light-grey: #edf0f1;
+            --violet: #655be1;
+            --dark-violet: #5146e1;
+            --black: #21232a;
+        }
+
+        .cabecalho {
+            background-color: var(--violet);
+            width: 100%;
+            padding: 35px;
+            border-radius: 0 0 32px 32px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            text-align: center;
+            padding: 0 20px;
+            background: var(--light-grey);
+            color: var(--white);
+        }
+
+        .notification {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 10px;
+            background: var(--violet);
+        }
+
+        /* MAIN STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+        .nav {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            max-width: 400px;
+            padding-bottom: 20px;
+            border-radius: 5px 5px 25px 25px;
+            margin: 300px auto 0;
+            background: var(--white);
+            box-shadow: rgb(50 50 93 / 10%) 0 30px 60px -12px,
+                rgb(0 0 0 / 15%) 0 18px 36px -18px;
+        }
+
+        .nav [type="checkbox"] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .nav [type="checkbox"]+label {
+            position: relative;
+            width: 75px;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1;
+            background: var(--violet);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            transition: all 0.2s;
+        }
+
+        .nav [type="checkbox"]+label:hover {
+            background: var(--dark-violet);
+        }
+
+        .menu li {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.4s;
+        }
+
+        .menu li:nth-child(1) {
+            transition-delay: 0.2s;
+        }
+
+        .menu li:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+
+        .menu li:nth-child(3) {
+            transition-delay: 0.1s;
+        }
+
+        .menu li:nth-child(4) {
+            transition-delay: 0.05s;
+        }
+
+        .menu li a {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--violet);
+        }
+
+        .menu li a span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(calc(-100% - 5px));
+            width: 100%;
+            font-size: 13px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            color: var(--black);
+            font-weight: bold;
+        }
+
+        .nav input:checked+label {
+            background: var(--black);
+            transform: translateY(calc(-50% + 4px));
+        }
+
+        .nav input:checked~.menu li:nth-child(1) {
+            top: -210px;
+            transition-delay: 0.1s;
+        }
+
+        .nav input:checked~.menu li:nth-child(2) {
+            top: -160px;
+            left: calc(50% - 75px);
+            transition-delay: 0.2s;
+        }
+
+        .nav input:checked~.menu li:nth-child(3) {
+            top: -160px;
+            left: calc(50% + 75px);
+            transition-delay: 0.3s;
+        }
+
+        .nav input:checked~.menu li:nth-child(4) {
+            top: -110px;
+            transition-delay: 0.4s;
+        }
+
+        .nav input:checked~.menu li a span {
+            opacity: 1;
+            transition-delay: 0.9s;
+        }
+
+        /* FOOTER STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+        .page-footer {
+            position: fixed;
+            right: 0;
+            bottom: 60px;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            color: var(--black);
+        }
+
+        .page-footer a {
+            display: flex;
+            margin-left: 4px;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            color: #1a1f36;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Ubuntu, sans-serif;
+        }
+
+        body {
+            min-height: 100%;
+            background-color: #ffffff;
+        }
+
+        h1 {
+            letter-spacing: -1px;
+        }
+
+        a {
+            color: #5469d4;
+            text-decoration: unset;
+        }
+
+        .login-root {
+            background: #fff;
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .loginbackground {
+            min-height: 692px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .flex-flex {
+            display: flex;
+        }
+
+        .align-center {
+            align-items: center;
+        }
+
+        .center-center {
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box-root {
+            box-sizing: border-box;
+        }
+
+        .flex-direction--column {
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .loginbackground-gridContainer {
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: [start] 1fr [left-gutter] (86.6px)[16] [left-gutter] 1fr [end];
+            grid-template-columns: [start] 1fr [left-gutter] repeat(16, 86.6px) [left-gutter] 1fr [end];
+            -ms-grid-rows: [top] 1fr [top-gutter] (64px)[8] [bottom-gutter] 1fr [bottom];
+            grid-template-rows: [top] 1fr [top-gutter] repeat(8, 64px) [bottom-gutter] 1fr [bottom];
+            justify-content: center;
+            margin: 0 -2%;
+            transform: rotate(-12deg) skew(-12deg);
+        }
+
+        .box-divider--light-all-2 {
+            box-shadow: inset 0 0 0 2px #e3e8ee;
+        }
+
+        .box-background--blue {
+            background-color: #5469d4;
+        }
+
+        .box-background--white {
+            background-color: #ffffff;
+        }
+
+        .box-background--blue800 {
+            background-color: #212d63;
+        }
+
+        .box-background--gray100 {
+            background-color: #e3e8ee;
+        }
+
+        .box-background--cyan200 {
+            background-color: #7fd3ed;
+        }
+
+        .padding-top--64 {
+            padding-top: 64px;
+        }
+
+        .padding-top--24 {
+            padding-top: 24px;
+        }
+
+        .padding-top--48 {
+            padding-top: 48px;
+        }
+
+        .padding-bottom--24 {
+            padding-bottom: 24px;
+        }
+
+        .padding-horizontal--48 {
+            padding: 48px;
+        }
+
+        .padding-bottom--15 {
+            padding-bottom: 15px;
+        }
+
+
+        .flex-justifyContent--center {
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+
+        .formbg {
+            margin: 0px auto;
+            width: 100%;
+            max-width: 448px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+        }
+
+        span {
+            display: block;
+            font-size: 20px;
+            line-height: 28px;
+            color: #1a1f36;
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        .reset-pass a,
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            display: block;
+        }
+
+        .reset-pass>a {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .grid--50-50 {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            align-items: center;
+        }
+
+        .field input {
+            font-size: 16px;
+            line-height: 28px;
+            padding: 8px 16px;
+            width: 100%;
+            min-height: 44px;
+            border: unset;
+            border-radius: 4px;
+            outline-color: rgb(84 105 212 / 0.5);
+            background-color: rgb(255, 255, 255);
+            box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(60, 66, 87, 0.16) 0px 0px 0px 1px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(84, 105, 212);
+            box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0.12) 0px 1px 1px 0px,
+                rgb(84, 105, 212) 0px 0px 0px 1px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(60, 66, 87, 0.08) 0px 2px 5px 0px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .field-checkbox input {
+            width: 20px;
+            height: 15px;
+            margin-right: 5px;
+            box-shadow: unset;
+            min-height: unset;
+        }
+
+        .field-checkbox label {
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        a.ssolink {
+            display: block;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .footer-link span {
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .listing a {
+            color: #697386;
+            font-weight: 600;
+            margin: 0 10px;
+        }
+
+        .animationRightLeft {
+            animation: animationRightLeft 2s ease-in-out infinite;
+        }
+
+        .animationLeftRight {
+            animation: animationLeftRight 2s ease-in-out infinite;
+        }
+
+        .tans3s {
+            animation: animationLeftRight 3s ease-in-out infinite;
+        }
+
+        .tans4s {
+            animation: animationLeftRight 4s ease-in-out infinite;
+        }
+
+        @keyframes animationLeftRight {
+            0% {
+                transform: translateX(0px);
+            }
+
+            50% {
+                transform: translateX(1000px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+
+        @keyframes animationRightLeft {
+            0% {
+                transform: translateX(0px);
+            }
+
+            50% {
+                transform: translateX(-1000px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+
+        /* From Uiverse.io by omar49511 */
+        .container-btn-file {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            background-color: #307750;
+            color: #fff;
+            border-style: none;
+            padding: 17px 30px;
+            border-radius: 0.5em;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 4px 8px 10px -3px rgba(0, 0, 0, 0.356);
+            transition: all 250ms;
+        }
+
+        .container-btn-file input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .container-btn-file>svg {
+            margin-right: 1em;
+        }
+
+        .container-btn-file::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 0;
+            border-radius: 0.5em;
+            background-color: #469b61;
+            z-index: -1;
+            transition: all 350ms;
+        }
+
+        .container-btn-file:hover::before {
+            width: 100%;
+        }
+
+        /* From Uiverse.io by vikas7754 */
+        .tooltip-container {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 17px;
+            border-radius: 10px;
+            margin-left: 135px;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            border-radius: 15px;
+            box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+                inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+                5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .profile {
+            background: #2a2b2f;
+            border-radius: 10px 15px;
+            padding: 10px;
+            border: 1px solid rgba(11, 63, 95, 1);
+        }
+
+        .tooltip-container:hover .tooltip {
+            top: -150px;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .icon {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            position: relative;
+        }
+
+        .layer {
+            width: 55px;
+            height: 55px;
+            transition: transform 0.3s;
+        }
+
+        .icon:hover .layer {
+            transform: rotate(-35deg) skew(20deg);
+        }
+
+        .layer span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .layer span,
+        .text {
+            color: #1da1f2;
+            border-color: #1da1f2;
+        }
+
+        .icon:hover.layer span {
+            box-shadow: -1px 1px 3px #1da1f2;
+        }
+
+        .icon .text {
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            opacity: 0;
+            font-weight: 500;
+            transform: translateX(-50%);
+            transition: bottom 0.3s ease, opacity 0.3s ease;
+        }
+
+        .icon:hover .text {
+            bottom: -35px;
+            opacity: 1;
+        }
+
+        .icon:hover .layer span:nth-child(1) {
+            opacity: 0.2;
+        }
+
+        .icon:hover .layer span:nth-child(2) {
+            opacity: 0.4;
+            transform: translate(5px, -5px);
+        }
+
+        .icon:hover .layer span:nth-child(3) {
+            opacity: 0.6;
+            transform: translate(10px, -10px);
+        }
+
+        .icon:hover .layer span:nth-child(4) {
+            opacity: 0.8;
+            transform: translate(15px, -15px);
+        }
+
+        .icon:hover .layer span:nth-child(5) {
+            opacity: 1;
+            transform: translate(20px, -20px);
+        }
+
+        .layer span.fab {
+            font-size: 30px;
+            line-height: 64px;
+            text-align: center;
+            fill: #1da1f2;
+            background: #000;
+        }
+
+        .user {
+            display: flex;
+            gap: 10px;
+        }
+
+        .img {
+            width: 50px;
+            height: 50px;
+            font-size: 25px;
+            font-weight: 700;
+            border: 1px solid #1da1f2;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .img image {
+            width: 50px;
+            height: 50px;
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            color: #fff;
+        }
+
+        .about {
+            color: #ccc;
+            padding-top: 5px;
+        }
+
+        .parent-container {
+            display: flex;
+            /* Torna os filhos flexíveis e alinha lado a lado */
+            align-items: center;
+            /* Alinha verticalmente */
+            gap: 20px;
+            /* Espaçamento entre os elementos */
+        }
+
+        .username {
+            color: #1da1f2;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .container {
+            display: flex;
+            
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-root">
+        <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+            <div class="loginbackground box-background--white padding-top--64">
+                <div class="loginbackground-gridContainer">
+                    <div class="box-root flex-flex" style="grid-area: top / start / 8 / end;">
+                        <div class="box-root"
+                            style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5;">
+                        <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2;">
+                        <div class="box-root box-background--blue800" style="flex-grow: 1;"></div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4;">
+                        <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1;"></div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6;">
+                        <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end;">
+                        <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end;">
+                        <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1;"></div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20;">
+                        <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                    <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17;">
+                        <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+                <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+                    <h1><a href="http://blog.stackfindover.com/" rel="dofollow">EtesTech</a></h1>
+                </div>
+                <div class="formbg-outer">
+                    <div class="formbg">
+                        <div class="formbg-inner padding-horizontal--48">
+                            <span class="padding-bottom--15">Cadastre um novo produto</span>
+                            <form id="stripe-login" method="POST" action="/processar">
+                                <div class="field padding-bottom--24">
+                                    <label for="nome">Nome do Produto</label>
+                                    <input type="text" name="nome" required>
+                                </div>
+                                <div class="field padding-bottom--24">
+                                    <div class="grid--50-50">
+                                        <label for="preco">Preço</label>
+                                        <input type="number" name="preco" step="0.01" required>
+                                    </div>
+                                </div>
+                                <div class="field padding-bottom--24">
+                                    <div class="grid--50-50">
+                                        <label for="quantidade">Quantidade</label>
+                                        <input type="number" name="quantidade" required>
+                                    </div>
+                                </div>
+                                <div class="field padding-bottom--24">
+                                    <input type="submit" class="btn-3" name="submit" value="Cadastrar">
+                                </div>
+                                <div class="parent-container">
+                                    <!-- Botão de Upload de Arquivo -->
+                                    <!-- Formulário para Upload Automático -->
+
+
+
+                                    <!-- JavaScript para Envio Automático -->
+
+
+
+
+                            </form>
+                            
+                                <div class="container">
+                                    <div class="folder">
+                                        <div class="front-side">
+                                            <div class="tip"></div>
+                                            <div class="cover"></div>
+                                        </div>
+                                        <div class="back-side cover"></div>
+                                    </div>
+                                    <!-- Formulário para Upload Automático -->
+                                    <form id="uploadForm" action="/process_csv" method="post"
+                                        enctype="multipart/form-data">
+                                        <input type="file" id="csvInput" name="csv_file" accept=".csv" required hidden>
+
+                                        <button type="button" class="container-btn-file" id="uploadBtn">
+                                            <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 50 50">
+                                                <path d="M28.8125 .03125L.8125 5.34375C.339844 
+                5.433594 0 5.863281 0 6.34375L0 43.65625C0 
+                44.136719 .339844 44.566406 .8125 44.65625L28.8125 
+                49.96875C28.875 49.980469 28.9375 50 29 50C29.230469 
+                50 29.445313 49.929688 29.625 49.78125C29.855469 49.589844 
+                30 49.296875 30 49L30 1C30 .703125 29.855469 .410156 29.625 
+                .21875C29.394531 .0273438 29.105469 -.0234375 28.8125 .03125ZM32 
+                6L32 13L34 13L34 15L32 15L32 20L34 20L34 22L32 22L32 27L34 27L34 
+                29L32 29L32 35L34 35L34 37L32 37L32 44L47 44C48.101563 44 49 
+                43.101563 49 42L49 8C49 6.898438 48.101563 6 47 6ZM36 13L44 
+                13L44 15L36 15ZM6.6875 15.6875L11.8125 15.6875L14.5 21.28125C14.710938 
+                21.722656 14.898438 22.265625 15.0625 22.875L15.09375 22.875C15.199219 
+                22.511719 15.402344 21.941406 15.6875 21.21875L18.65625 15.6875L23.34375 
+                15.6875L17.75 24.9375L23.5 34.375L18.53125 34.375L15.28125 
+                28.28125C15.160156 28.054688 15.035156 27.636719 14.90625 
+                27.03125L14.875 27.03125C14.8125 27.316406 14.664063 27.761719 
+                14.4375 28.34375L11.1875 34.375L6.1875 34.375L12.15625 25.03125ZM36 
+                20L44 20L44 22L36 22ZM36 27L44 27L44 29L36 29ZM36 35L44 35L44 37L36 37Z">
+                                                </path>
+                                            </svg>
+                                            Upload File
+                                        </button>
+                                    </form>
+
+                                    <!-- JavaScript para Envio Automático -->
+                                    <!-- From Uiverse.io by vikas7754 -->
+                                    <div class="tooltip-container">
+                                        <div class="tooltip">
+                                            <div class="profile">
+                                                <div class="user">
+                                                    <img src="https://media.licdn.com/dms/image/v2/D4D03AQEAYgs185yjvg/profile-displayphoto-shrink_400_400/B4DZS404YSG4Ag-/0/1738267658865?e=1747267200&v=beta&t=TyyoDGPo4_NnbP3d7xoSufPbltr5jxdMMU4DSm2pc9U"
+                                                        alt="Foto Melissa" class="img">
+                                                    <div class="details">
+
+                                                        <div class="username">Melissa Etes</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="text">
+                                            <a class="icon" href="https://www.linkedin.com/in/melissa-etes-10184925b/">
+                                                <div class="layer">
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span class="fab fa-linkedin">
+                                                        <svg viewBox="0 0 448 512" height="1em">
+                                                            <path
+                                                                d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z">
+                                                            </path>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <div class="text">LinkedIn</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                            
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <div class="cabecalho">
+        <h1>Cadastre um produto no estoque virtual</h1>
+    </div>
+
+    <nav class="nav">
+        <input id="menu" type="checkbox">
+        <label for="menu">Menu</label>
+        <ul class="menu">
+            <li>
+                <a href="#0">
+                    <span>Log in</span>
+                    <i class="fas fa-address-card" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li>
+                <a href="estoque">
+                    <span>Estoque</span>
+                    <i class="fas fa-tasks" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#0">
+                    <span>Clients</span>
+                    <i class="fas fa-users" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#0">
+                    <span>Contact</span>
+                    <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    </a>
+    </footer>
+    <!-- Script para abrir/fechar o menu lateral -->
+    <script>
+        document.getElementById("uploadBtn").addEventListener("click", function () {
+            document.getElementById("csvInput").click();
+        });
+
+        document.getElementById("csvInput").addEventListener("change", function () {
+            document.getElementById("uploadForm").submit();  // Envia o formulário automaticamente ao selecionar um arquivo
+        });
+    </script>
+</body>
+
+</html>
